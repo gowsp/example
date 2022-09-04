@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<script src="bin/jsencrypt.min.js"></script>
+
+<body>
+    <input type="button" onclick="initPubkey()" value="初始化公钥" /></input>
+    <form action="/security/decrypt" method="POST" onsubmit="encrypt()">
+        <input type="password" name="password" id="password">
+        <input type="submit" value="提交">
+    </form>
+</body>
+<script>
+    var crypt = new JSEncrypt();
+    var httpRequest = new XMLHttpRequest();
+    // 初始化公钥
+    function initPubkey() {
+        httpRequest.open('GET', '/security/publicKey');
+        httpRequest.send();
+        httpRequest.onreadystatechange = function (e) {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                pubkey = httpRequest.responseText;
+                crypt.setKey(pubkey);
+            }
+        };
+    }
+    // 加密密码信息
+    function encrypt() {
+        var pwd = document.getElementById('password');
+        var val = document.getElementById('password').value;
+        var enc = crypt.encrypt(val);
+        pwd.value = enc;
+    }
+</script>
+
+</html>

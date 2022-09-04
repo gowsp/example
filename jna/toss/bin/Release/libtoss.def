@@ -1,0 +1,4 @@
+EXPORTS
+    DllMain @1
+    add @2
+    referenceCase @3

@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: ${taget.profile}
+title: hello profile
+app:
+  port: 8080
+  name: hello spring

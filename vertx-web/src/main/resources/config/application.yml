@@ -1,0 +1,4 @@
+logging:
+  path: log
+http:
+  port: 8080

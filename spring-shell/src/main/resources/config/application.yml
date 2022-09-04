@@ -1,0 +1,4 @@
+spring:
+  shell:
+    console:
+      enable: true
