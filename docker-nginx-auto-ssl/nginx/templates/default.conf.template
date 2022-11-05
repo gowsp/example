@@ -1,0 +1,28 @@
+server {
+    listen              ${HTTPS_PORT} ssl http2;
+    server_name         ${DOMAIN_NAME};
+
+    # SSL
+    ssl_certificate     /etc/nginx/ssl/cert.pem;
+    ssl_certificate_key /etc/nginx/ssl/key.pem;
+
+    # security
+    include             additional/security.conf;
+
+    # reverse proxy
+    location / {
+        proxy_pass            http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        include               additional/proxy.conf;
+    }
+
+    # additional config
+    include additional/general.conf;
+}
+
+# HTTP redirect
+server {
+    listen      ${HTTP_PORT};
+    server_name ${DOMAIN_NAME};
+    return      301 https://localhost$request_uri;
+}
